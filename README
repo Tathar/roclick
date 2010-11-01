@@ -1,0 +1,23 @@
+compilation:
+
+./configure
+make
+
+il est preferable de ne pas faire "make install" pour le momment
+
+utilisation:
+
+"roclick" se trouve dans le sous repertoire src/
+"libXcbRecPlay.so.1.0" se trouve dans le sous repertoire libXRecPlay/xcb/
+
+il est necesaire d'executer le jeux avec un LD_PRELOAD
+ex:
+LD_PRELOAD=libXRecPlay/xcb/libXcbRecPlay.so.1.0 sol
+
+puis (ou avant) il suffit d'executer roclick
+ex:
+src/roclick
+
+
+le fichier de configue "roclick.scm" est fourni a titre d'exemple
+
