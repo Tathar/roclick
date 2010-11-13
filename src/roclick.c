@@ -210,7 +210,7 @@ void inner_main()
     display=XOpenDisplay(NULL);
     if(display==NULL)
     {
-        printf("Cannot open display\n");
+        fprintf(stderr,"Cannot open display\n");
         exit(1);
     }
 
@@ -564,9 +564,9 @@ void inner_main()
 
 
             }
-            else if (e.xany.type == DestroyNotify )
+            else if (e.xany.type == DestroyNotify && e.xany.window == fenetre_client )
             {
-                fenetre_client = NULL;
+                fenetre_client = None;
             }
         }
 //fin de la boucle infini

@@ -1,4 +1,4 @@
-;(verbose)
+(verbose)
 
 ;(button-grab No_du_bouton_a_intercepter)
 ;"button-grab" intercepte compeltement le signal du bouton,qui devient donc inutilisable pour autre chose
