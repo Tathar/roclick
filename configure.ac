@@ -2,8 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([roclick], [1.1], [tathar.dev@gmail.com])
-AM_INIT_AUTOMAKE([roclick], [1.1])
+AC_INIT([roclick], [1.1.3], [tathar.dev@gmail.com])
+AM_INIT_AUTOMAKE([roclick], [1.1.3])
 AC_CONFIG_SRCDIR([src/roclick.c])
 
 # Checks for programs.
@@ -61,6 +61,15 @@ AC_CHECK_HEADERS([xcb/xcb_atom.h], [
 	AC_DEFINE(HAVE_LIBXCBATOM, 1, [Define to 1 if you have the 'xcb-atom' library (-lxcb-atom).])
     ], AC_MSG_ERROR(The xcb-atom library is required in order to build the program!))
 ], AC_MSG_ERROR(The xcb-atom header is required in order to build the program!))
+
+
+# Checks for X11-xcb.
+AC_CHECK_HEADERS([X11/Xlib-xcb.h], [
+    AC_CHECK_LIB(X11-xcb, XGetXCBConnection, [
+	LIBS="$LIBS -lX11-xcb"
+	AC_DEFINE(HAVE_LIBX11_XCB, 1, [Define to 1 if you have the 'X11-xcb' library (-lX11-xcb).])
+    ], AC_MSG_ERROR(The X11-xcb library is required in order to build the program!))
+], AC_MSG_ERROR(The X11-xcb header is required in order to build the program!))
 
 
 # Checks for guile.

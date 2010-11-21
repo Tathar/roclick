@@ -223,40 +223,13 @@ void inner_main()
 //GUILE
 
     get_rc_guile_file();
-    /*
+
     	if ( (use_key.key != NULL) || (mod_key.key != NULL) )
     	{
     // Désactivation de l'autorepetition du clavier
     		XAutoRepeatOff(display);
     		sleep(1);
-
-    		XGetInputFocus(display, &focus, &revert);
-    		if (revert == RevertToParent)
-    			XSelectInput (display, focus, KeyPressMask | KeyReleaseMask | FocusChangeMask);
-
-    			Hierarchie(DefaultRootWindow(display));
-    		}
-    //	}
-    */
-
-    /*
-        for(i=0; grab_button.nombre > i ; i++)
-        {
-            //XGrabButton (display, grab_button.boutons[i], AnyModifier, DefaultRootWindow(display), False, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync, None, None);
-            XEvent send;
-            send.xbutton.type = ButtonPress;
-            send.xbutton.button = grab_button.boutons[i];
-            if (i == grab_button.nombre - 1)
-            {
-                libXRecPlay_AddEvent( display, e.xany.window, send, True, True );
-            }
-            else
-            {
-                libXRecPlay_AddEvent( display, e.xany.window, send, True, False );
-            }
-
-        }
-    */
+    	}
 
     grab_button_sup.nombre = 12;
     grab_button_sup.boutons = malloc( 12 *sizeof(int));
@@ -352,20 +325,10 @@ void inner_main()
                         for(j=0; mod_key.key[i].nbgrab > j ; j++)
                         {
                             //XGrabButton (display, mod_key.key[i].grab[j], AnyModifier, DefaultRootWindow(display), False, ButtonPressMask | ButtonReleaseMask, GrabModeAsync, GrabModeAsync, None, None);
-                            printf("ici\n");
                             XEvent send;
                             send.xbutton.type = ButtonPress;
                             send.xbutton.button = mod_key.key[i].grab[j];
-                            if (j == mod_key.key[i].nbgrab - 1)
-                            {
-                                printf("ici true\n");
-                                libXRecPlay_AddEvent( display, e.xany.window, send, True, True );
-                            }
-                            else
-                            {
-                                printf("ici false\n");
-                                libXRecPlay_AddEvent( display, e.xany.window, send, True, False );
-                            }
+                            libXRecPlay_AddEvent( display, e.xany.window, send, True );
                         }
                     }
                 }
@@ -404,14 +367,7 @@ void inner_main()
                             XEvent send;
                             send.xbutton.type = ButtonPress;
                             send.xbutton.button = mod_key.key[i].grab[j];
-                            if (j == mod_key.key[i].nbgrab - 1)
-                            {
-                                libXRecPlay_RemEvent( display, e.xany.window, send, True, True );
-                            }
-                            else
-                            {
-                                libXRecPlay_RemEvent( display, e.xany.window, send, True, False );
-                            }
+                            libXRecPlay_RemEvent( display, e.xany.window, send, True );
                         }
                     }
                 }
@@ -448,14 +404,7 @@ void inner_main()
                             XEvent send;
                             send.xbutton.type = ButtonPress;
                             send.xbutton.button = grab_button_sup.boutons[j];
-                            if ( grab_button_sup.nombre == (j + 1) )
-                            {
-                                libXRecPlay_AddEvent( display, fenetre_client, send, True, True );
-                            }
-                            else
-                            {
-                                libXRecPlay_AddEvent( display, fenetre_client, send, True, False );
-                            }
+                            libXRecPlay_AddEvent( display, fenetre_client, send, True );
                         }
                         break;
                     }
@@ -487,14 +436,7 @@ void inner_main()
                             XEvent send;
                             send.xbutton.type = ButtonPress;
                             send.xbutton.button = grab_button_sup.boutons[j];
-                            if ( grab_button_sup.nombre == (j + 1) )
-                            {
-                                libXRecPlay_RemEvent( display, fenetre_client, send, True, True );
-                            }
-                            else
-                            {
-                                libXRecPlay_RemEvent( display, fenetre_client, send, True, False );
-                            }
+                            libXRecPlay_RemEvent( display, fenetre_client, send, True);
                         }
                         break;
                     }
@@ -522,14 +464,7 @@ void inner_main()
                     XEvent send;
                     send.xbutton.type = ButtonPress;
                     send.xbutton.button = grab_button.boutons[i];
-                    if (i == grab_button.nombre - 1)
-                    {
-                        libXRecPlay_AddEvent( display, e.xany.window, send, True, True );
-                    }
-                    else
-                    {
-                        libXRecPlay_AddEvent( display, e.xany.window, send, True, False );
-                    }
+                    libXRecPlay_AddEvent( display, e.xany.window, send, True );
                 }
 
                 for(i=0; use_key.nombre > i ; i++)
@@ -537,14 +472,7 @@ void inner_main()
                     XEvent send;
                     send.xbutton.type = KeyPress;
                     send.xbutton.button = use_key.key[i];
-                    if (i == use_key.nombre - 1)
-                    {
-                        libXRecPlay_AddEvent( display, e.xany.window, send, False, True );
-                    }
-                    else
-                    {
-                        libXRecPlay_AddEvent( display, e.xany.window, send, False, False );
-                    }
+                    libXRecPlay_AddEvent( display, e.xany.window, send, False );
                 }
 
                 for(i=0; mod_key.nombre > i ; i++)
@@ -552,14 +480,7 @@ void inner_main()
                     XEvent send;
                     send.xbutton.type = KeyPress;
                     send.xbutton.button = mod_key.key[i].key;
-                    if (i == mod_key.nombre - 1)
-                    {
-                        libXRecPlay_AddEvent( display, e.xany.window, send, False, True );
-                    }
-                    else
-                    {
-                        libXRecPlay_AddEvent( display, e.xany.window, send, False, False );
-                    }
+                    libXRecPlay_AddEvent( display, e.xany.window, send, False );
                 }
 
 
@@ -599,7 +520,7 @@ void traite_signal( int s )
     printf( "SIG %d\n", s );
     infinie = False;
     int i;
-    /*
+
     	if ( (use_key.key != NULL) || (mod_key.key != NULL) )
     		{
     // Réactivation de l'autorepetition du clavier
@@ -607,7 +528,7 @@ void traite_signal( int s )
     		XFlush(display);
     		usleep(100000);
     		}
-    */
+
     for(i=0; i < nb_scheme_KR; i++)
     {
 
